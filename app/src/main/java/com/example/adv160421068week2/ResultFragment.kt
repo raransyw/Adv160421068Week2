@@ -7,24 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.example.adv160421068week2.databinding.FragmentMainBinding
-import kotlin.random.Random
+import com.example.adv160421068week2.databinding.FragmentResultBinding
 
-class MainFragment : Fragment() {
-    private lateinit var binding: FragmentMainBinding
+class ResultFragment : Fragment() {
+    private lateinit var binding: FragmentResultBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMainBinding.inflate(inflater,container,false)
+        binding = FragmentResultBinding.inflate(inflater,container,false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnStart.setOnClickListener{
-            val playerName = binding.txtName.text.toString()
-            val action = MainFragmentDirections.actionGameFragment(playerName)
+        binding.btnBackMain.setOnClickListener {
+            val action = ResultFragmentDirections.actionResultFragmentToMainFragment()
             Navigation.findNavController(it).navigate(action)
+        }
+        if (arguments != null) {
+            val score = ResultFragmentArgs.fromBundle(requireArguments()).score
+            binding.txtScore.text = "Your Score is $score"
         }
     }
 }
